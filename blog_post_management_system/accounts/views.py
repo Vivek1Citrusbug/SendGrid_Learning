@@ -18,7 +18,11 @@ from django.contrib.auth.views import LoginView
 from sendgrid import SendGridAPIClient
 from django.conf import settings
 from sendgrid.helpers.mail import *
+import os
+from dotenv import load_dotenv
 
+# Load .env file
+load_dotenv()
 
 class RegistrationView(FormView):
     """This view is used for registering new user"""
@@ -34,7 +38,7 @@ class RegistrationView(FormView):
         user = form.save(commit=False)
         user.save()
         print("after usre save")
-        sg = sendgrid.SendGridAPIClient(api_key=settings.EMAIL_HOST_PASSWORD)
+        sg = sendgrid.SendGridAPIClient(api_key=os.getenv("EMAIL_HOST_PASSWORD"))
         from_email = Email("vivek1.citrusbug@gmail.com")
         subject = "Welcome to Our Platform!"
         content = Content("text/plain", "<strong>It is easy to send mail with Python and SendGrid</strong>")
@@ -45,7 +49,7 @@ class RegistrationView(FormView):
             html_content=content
         )
         try:
-            sg = SendGridAPIClient(settings.EMAIL_HOST_PASSWORD)
+            sg = SendGridAPIClient(api_key=os.getenv("EMAIL_HOST_PASSWORD"))
             response = sg.send(message)
             print(f"Email sent successfully, status code: {response.status_code}")
             messages.success(self.request, "Registration successful! Please check your email for confirmation.")

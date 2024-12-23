@@ -151,11 +151,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Configuration for SendGrid
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "apikey"  
-EMAIL_HOST_PASSWORD = "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"  
-DEFAULT_FROM_EMAIL = "vivek1.citrusbug@gmail.com"  # Replace with your email
