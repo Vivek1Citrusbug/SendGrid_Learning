@@ -90,12 +90,14 @@ WSGI_APPLICATION = 'blog_post_management_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blog_post_database',
-        'USER': 'postgres',
-        'PASSWORD': 'vivek',
-        'HOST': '127.0.0.1',
-        'PORT': '5433',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': 'blog_post_database',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'vivek',
+        # 'HOST': '127.0.0.1',
+        # 'PORT': '5433',
     }
 }
 
@@ -146,3 +148,14 @@ MEDIA_ROOT = BASE_DIR/ 'static'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Configuration for SendGrid
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "apikey"  
+EMAIL_HOST_PASSWORD = "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"  
+DEFAULT_FROM_EMAIL = "vivek1.citrusbug@gmail.com"  # Replace with your email

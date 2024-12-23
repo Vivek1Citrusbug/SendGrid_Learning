@@ -1,3 +1,4 @@
+import sendgrid
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import auth
@@ -14,6 +15,9 @@ from .forms import UserProfileForm
 from django.contrib import messages
 from django.views.generic.edit import FormView
 from django.contrib.auth.views import LoginView
+from sendgrid import SendGridAPIClient
+from django.conf import settings
+from sendgrid.helpers.mail import *
 
 
 class RegistrationView(FormView):
@@ -23,10 +27,32 @@ class RegistrationView(FormView):
     form_class = CreateUserForm
     success_url = reverse_lazy("user-login")
 
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.save()
 
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.save()
+        print("after usre save")
+        sg = sendgrid.SendGridAPIClient(api_key=settings.EMAIL_HOST_PASSWORD)
+        from_email = Email("vivek1.citrusbug@gmail.com")
+        subject = "Welcome to Our Platform!"
+        content = Content("text/plain", "<strong>It is easy to send mail with Python and SendGrid</strong>")
+        message = Mail(
+            from_email=from_email,
+            to_emails=user.email,  
+            subject=subject,
+            html_content=content
+        )
+        try:
+            sg = SendGridAPIClient(settings.EMAIL_HOST_PASSWORD)
+            response = sg.send(message)
+            print(f"Email sent successfully, status code: {response.status_code}")
+            messages.success(self.request, "Registration successful! Please check your email for confirmation.")
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+
+        return super().form_valid(form)
 
 class CustomLoginView(LoginView):
     """This view is used for login Existing user"""
