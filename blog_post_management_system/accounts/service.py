@@ -7,8 +7,17 @@ from sendgrid.helpers.mail import Mail
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
-def mail_service(to_email,username):
-    message = Mail(from_email="vivek1.citrusbug@gmail.com",to_emails=to_email,)
+
+## sendgrid mail service
+def mail_service(to_email, username):
+    """
+    Service for sending email
+    """
+
+    message = Mail(
+        from_email="vivek1.citrusbug@gmail.com",
+        to_emails=to_email,
+    )
     message.dynamic_template_data = {"user_name": username}
     message.template_id = os.getenv("TEMPLATE_ID")
     try:
