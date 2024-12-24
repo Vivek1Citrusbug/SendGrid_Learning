@@ -11,7 +11,7 @@ from sendgrid.helpers.mail import Mail
 ## sendgrid mail service
 def mail_service(to_email, username):
     """
-    Service for sending email
+    Service for sending email using sendgrid api client.
     """
 
     message = Mail(
