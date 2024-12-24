@@ -15,14 +15,23 @@ from .forms import UserProfileForm
 from django.contrib import messages
 from django.views.generic.edit import FormView
 from django.contrib.auth.views import LoginView
-from sendgrid import SendGridAPIClient
 from django.conf import settings
+from django.core.mail import send_mail
 from sendgrid.helpers.mail import *
 import os
 from dotenv import load_dotenv
+from sendgrid.helpers.mail import Mail, Email, Content
+import certifi
+from django.contrib import messages
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+from accounts.service import mail_service
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 # Load .env file
 load_dotenv()
+
 
 class RegistrationView(FormView):
     """This view is used for registering new user"""
@@ -31,32 +40,12 @@ class RegistrationView(FormView):
     form_class = CreateUserForm
     success_url = reverse_lazy("user-login")
 
-    # def form_valid(self, form):
-    #     form.save()
-
     def form_valid(self, form):
         user = form.save(commit=False)
         user.save()
-        print("after usre save")
-        sg = sendgrid.SendGridAPIClient(api_key=os.getenv("EMAIL_HOST_PASSWORD"))
-        from_email = Email("vivek1.citrusbug@gmail.com")
-        subject = "Welcome to Our Platform!"
-        content = Content("text/plain", "<strong>It is easy to send mail with Python and SendGrid</strong>")
-        message = Mail(
-            from_email=from_email,
-            to_emails=user.email,  
-            subject=subject,
-            html_content=content
-        )
-        try:
-            sg = SendGridAPIClient(api_key=os.getenv("EMAIL_HOST_PASSWORD"))
-            response = sg.send(message)
-            print(f"Email sent successfully, status code: {response.status_code}")
-            messages.success(self.request, "Registration successful! Please check your email for confirmation.")
-        except Exception as e:
-            print(f"An error occurred: {str(e)}")
-
+        mail_service(form.instance.email,form.instance.username)
         return super().form_valid(form)
+
 
 class CustomLoginView(LoginView):
     """This view is used for login Existing user"""

@@ -11,7 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
+# Load .env file
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap5',
+    'minio_storage',
 ]
 
 EXTERNAL_APPS = [
@@ -149,5 +154,38 @@ MEDIA_ROOT = BASE_DIR/ 'static'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email Serivice Settings
+
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+EMAIL_HOST= os.getenv("EMAIL_HOST")
+EMAIL_PORT= os.getenv("EMAIL_PORT")
+EMAIL_USE_TLS= os.getenv("EMAIL_USE_TLS")
+EMAIL_HOST_USER= os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD= os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL= os.getenv("DEFAULT_FROM_EMAIL")
+TEMPLATE_ID= os.getenv("TEMPLATE_ID")
+
+
+## MinIo settings 
+# MinIO Storage Configuration
+DEFAULT_FILE_STORAGE=os.getenv("DEFAULT_FILE_STORAGE")
+STATICFILES_STORAGE=os.getenv("STATICFILES_STORAGE")
+
+# MinIO Server Details
+MINIO_STORAGE_ENDPOINT=os.getenv("MINIO_STORAGE_ENDPOINT")
+MINIO_STORAGE_ACCESS_KEY=os.getenv("MINIO_STORAGE_ACCESS_KEY")
+MINIO_STORAGE_SECRET_KEY=os.getenv("MINIO_STORAGE_SECRET_KEY")
+MINIO_STORAGE_USE_HTTPS=os.getenv("MINIO_STORAGE_USE_HTTPS")
+
+# MinIO Media Storage Settings
+MINIO_STORAGE_MEDIA_BUCKET_NAME=os.getenv("MINIO_STORAGE_MEDIA_BUCKET_NAME")
+MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET=os.getenv("MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET")
+MINIO_STORAGE_MEDIA_OBJECT_METADATA=os.getenv("MINIO_STORAGE_MEDIA_OBJECT_METADATA")
+MINIO_STORAGE_MEDIA_BACKUP_BUCKET=os.getenv("MINIO_STORAGE_MEDIA_BACKUP_BUCKET")
+MINIO_STORAGE_MEDIA_BACKUP_FORMAT=os.getenv("MINIO_STORAGE_MEDIA_BACKUP_FORMAT")
+
+# MinIO Static Storage Settings
+MINIO_STORAGE_STATIC_BUCKET_NAME=os.getenv("MINIO_STORAGE_STATIC_BUCKET_NAME")
+MINIO_STORAGE_AUTO_CREATE_STATIC_BUCKET=os.getenv("MINIO_STORAGE_AUTO_CREATE_STATIC_BUCKET")
 
 
