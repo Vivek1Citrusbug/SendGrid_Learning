@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap5',
     'minio_storage',
+    'storage',
 ]
 
 EXTERNAL_APPS = [
@@ -167,23 +168,40 @@ DEFAULT_FROM_EMAIL= os.getenv("DEFAULT_FROM_EMAIL")
 TEMPLATE_ID= os.getenv("TEMPLATE_ID")
 
 
-## MinIo settings 
+# ## MinIo settings for s3boto3 script
 
-# MinIO Storage Configuration
-DEFAULT_FILE_STORAGE=os.getenv("DEFAULT_FILE_STORAGE")
-# STATICFILES_STORAGE=os.getenv("STATICFILES_STORAGE")
+# # MinIO Storage Configuration
+# DEFAULT_FILE_STORAGE=os.getenv("DEFAULT_FILE_STORAGE")
+# # STATICFILES_STORAGE=os.getenv("STATICFILES_STORAGE")
 
-# MinIO Server Details
-MINIO_STORAGE_ENDPOINT=os.getenv("MINIO_STORAGE_ENDPOINT")
-MINIO_STORAGE_ACCESS_KEY=os.getenv("MINIO_STORAGE_ACCESS_KEY")
-MINIO_STORAGE_SECRET_KEY=os.getenv("MINIO_STORAGE_SECRET_KEY")
-MINIO_STORAGE_USE_HTTPS=os.getenv("MINIO_STORAGE_USE_HTTPS")
+# # MinIO Server Details
+# MINIO_STORAGE_ENDPOINT=os.getenv("MINIO_STORAGE_ENDPOINT")
+# MINIO_STORAGE_ACCESS_KEY=os.getenv("MINIO_STORAGE_ACCESS_KEY")
+# MINIO_STORAGE_SECRET_KEY=os.getenv("MINIO_STORAGE_SECRET_KEY")
+# MINIO_STORAGE_USE_HTTPS=os.getenv("MINIO_STORAGE_USE_HTTPS")
 
-# MinIO Media Storage Settings
-MINIO_STORAGE_MEDIA_BUCKET_NAME=os.getenv("MINIO_STORAGE_MEDIA_BUCKET_NAME")
-MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET=os.getenv("MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET")
+# # MinIO Media Storage Settings
+# MINIO_STORAGE_MEDIA_BUCKET_NAME=os.getenv("MINIO_STORAGE_MEDIA_BUCKET_NAME")
+# MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET=os.getenv("MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET")
 
-MINIO_STORAGE_MEDIA_URL=os.getenv("MINIO_STORAGE_MEDIA_URL")
+# MINIO_STORAGE_MEDIA_URL=os.getenv("MINIO_STORAGE_MEDIA_URL")
+
+
+
+
+# MinIO Configuration
+# Default File Storage for MinIO django connect with minio backend
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+AWS_ACCESS_KEY_ID = os.getenv("MINIO_STORAGE_ACCESS_KEY", "default_access_key")
+AWS_SECRET_ACCESS_KEY = os.getenv("MINIO_STORAGE_SECRET_KEY", "default_secret_key")
+AWS_STORAGE_BUCKET_NAME = os.getenv("MINIO_STORAGE_MEDIA_BUCKET_NAME", "default_bucket_name")
+TEMP = os.getenv("MINIO_STORAGE_ENDPOINT")
+AWS_S3_ENDPOINT_URL = f"http://{TEMP}"  
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = "public-read"  
+
+
 
 
 
