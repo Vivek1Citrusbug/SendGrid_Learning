@@ -9,10 +9,11 @@ MINIO_BUCKET_NAME = "profile-bucket"
 
 s3 = boto3.client(
     "s3",
-    endpoint_url=f"{MINIO_STORAGE_ENDPOINT}",
+    endpoint_url=f"http://{MINIO_STORAGE_ENDPOINT}",
     aws_access_key_id=MINIO_STORAGE_ACCESS_KEY,
     aws_secret_access_key=MINIO_STORAGE_SECRET_KEY,
 )
+
 
 def upload_file(file_path, object_name):
     try:
@@ -25,6 +26,7 @@ def upload_file(file_path, object_name):
     except Exception as e:
         print(f"Error uploading file: {e}")
 
+
 def download_file(object_name, download_path):
     try:
         s3.download_file(MINIO_BUCKET_NAME, object_name, download_path)
@@ -33,6 +35,7 @@ def download_file(object_name, download_path):
         print("Credentials not available.")
     except Exception as e:
         print(f"Error downloading file: {e}")
+
 
 def generate_presigned_url(object_name, expiration=3600):
     try:
@@ -47,6 +50,7 @@ def generate_presigned_url(object_name, expiration=3600):
         print("Credentials not available.")
     except Exception as e:
         print(f"Error generating pre-signed URL: {e}")
+
 
 upload_file(
     "blog_post_management_system/static/profiles/profile_pictures/1.jpg", "Object1.jpg"
