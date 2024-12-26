@@ -191,7 +191,7 @@ TEMPLATE_ID= os.getenv("TEMPLATE_ID")
 
 # MinIO Configuration
 # Default File Storage for MinIO django connect with minio backend
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_FILE_STORAGE")
 AWS_ACCESS_KEY_ID = os.getenv("MINIO_STORAGE_ACCESS_KEY", "default_access_key")
 AWS_SECRET_ACCESS_KEY = os.getenv("MINIO_STORAGE_SECRET_KEY", "default_secret_key")
 AWS_STORAGE_BUCKET_NAME = os.getenv("MINIO_STORAGE_MEDIA_BUCKET_NAME", "default_bucket_name")
