@@ -1,11 +1,14 @@
 import os
 import requests
 from requests_oauthlib import OAuth2Session, OAuth2
+from dotenv import load_dotenv
 
+# Load .env file
+load_dotenv()
 
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
-redirect_uri = "https://cc02-182-70-122-97.ngrok-free.app"
+redirect_uri = "https://427b-182-70-122-97.ngrok-free.app"
 print(client_id)
 print(client_secret)
 
