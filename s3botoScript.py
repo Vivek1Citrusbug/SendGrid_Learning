@@ -16,6 +16,10 @@ s3 = boto3.client(
 
 
 def upload_file(file_path, object_name):
+    """
+    Functiun to upload file to minio storage bucket
+    """
+
     try:
         s3.upload_file(file_path, MINIO_BUCKET_NAME, object_name)
         print(f"File '{file_path}' uploaded successfully as '{object_name}'")
@@ -28,6 +32,9 @@ def upload_file(file_path, object_name):
 
 
 def download_file(object_name, download_path):
+    """
+    Functiun to download file from minio storage bucket
+    """
     try:
         s3.download_file(MINIO_BUCKET_NAME, object_name, download_path)
         print(f"File '{object_name}' downloaded successfully to '{download_path}'")
@@ -38,6 +45,9 @@ def download_file(object_name, download_path):
 
 
 def generate_presigned_url(object_name, expiration=3600):
+    """
+    Functiun to generage public presigned url for object with expiration time
+    """
     try:
         url = s3.generate_presigned_url(
             "get_object",

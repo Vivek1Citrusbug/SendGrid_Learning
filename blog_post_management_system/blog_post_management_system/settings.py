@@ -30,7 +30,7 @@ SECRET_KEY = "django-insecure-z*8za1q^prl46iyc^^^i6oy$ep3-5q0^vkja_!sim3ehv3+@jc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 LOGIN_REDIRECT_URL = '/blogs/'
@@ -172,7 +172,6 @@ TEMPLATE_ID= os.getenv("TEMPLATE_ID")
 
 # # MinIO Storage Configuration
 # DEFAULT_FILE_STORAGE=os.getenv("DEFAULT_FILE_STORAGE")
-# # STATICFILES_STORAGE=os.getenv("STATICFILES_STORAGE")
 
 # # MinIO Server Details
 # MINIO_STORAGE_ENDPOINT=os.getenv("MINIO_STORAGE_ENDPOINT")
