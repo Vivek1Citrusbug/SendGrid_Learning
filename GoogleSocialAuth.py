@@ -3,8 +3,8 @@ import requests
 from requests_oauthlib import OAuth2Session, OAuth2
 
 
-client_id = "787879506704-obeas0lp3tdn93uq1vninp2uheh5b8a0.apps.googleusercontent.com"
-client_secret = "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"
+client_id = os.getenv("CLIENT_ID")
+client_secret = os.getenv("CLIENT_SECRET")
 redirect_uri = "https://cc02-182-70-122-97.ngrok-free.app"
 print(client_id)
 print(client_secret)
