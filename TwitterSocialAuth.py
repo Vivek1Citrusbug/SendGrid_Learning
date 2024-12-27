@@ -7,23 +7,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-AUTHORIZATION_BASE_URL = "https://api.x.com/oauth/authorize"
-TOKEN_URL = "https://api.x.com/2/oauth2/token"
-API_URL = "https://api.x.com/2/users"
+AUTHORIZATION_BASE_URL = "https://twitter.com/i/oauth2/authorize"
+TOKEN_URL = "https://api.twitter.com/oauth2/token"
+API_URL = "https://api.twitter.com/2/me"
 
-# twitter OAuth credentials
 CLIENT_ID = os.getenv("CLIENT_ID_TWITTER")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET_TWITTER")
 REDIRECT_URI = "https://ab7a-182-70-122-97.ngrok-free.app"
 
 oauth_session = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URI)
-
-# oauth2_user_handler = tweepy.OAuth2UserHandler(
-#     client_id=CLIENT_ID,
-#     redirect_uri=REDIRECT_URI,
-#     scope=['users.read','offline.access'],
-#     client_secret=CLIENT_SECRET
-# )
 
 def get_authorization_url():
     """
@@ -40,12 +32,11 @@ def get_access_token(authorization_response):
     Function to get access token
     """
     
-    oauth_session.fetch_token(
-        TOKEN_URL,
-        authorization_response=authorization_response,
-        client_secret=CLIENT_SECRET,
-    )
-    print("Access token obtained successfully.")
+    try:
+        oauth_session.fetch_token(TOKEN_URL, authorization_response=authorization_response, client_secret=CLIENT_SECRET)
+        print("Access token obtained successfully.")
+    except Exception as e:
+        print(f"Error during token exchange: {str(e)}")
 
 
 def get_user_data():
@@ -54,7 +45,10 @@ def get_user_data():
     """
     
     response = oauth_session.get(API_URL)
-    return response.json()
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return {"error": f"Failed to retrieve user data. Status code: {response.status_code}"}
 
 def main():
     """
