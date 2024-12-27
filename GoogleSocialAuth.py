@@ -8,7 +8,7 @@ load_dotenv()
 
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
-redirect_uri = "https://427b-182-70-122-97.ngrok-free.app"
+redirect_uri = "https://ab7a-182-70-122-97.ngrok-free.app"
 print(client_id)
 print(client_secret)
 
