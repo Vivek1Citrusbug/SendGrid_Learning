@@ -14,7 +14,7 @@ API_URL = "https://api.github.com/user"
 # GitHub OAuth credentials
 CLIENT_ID = os.getenv("CLIENT_ID_GITHUB")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET_GITHUB")
-REDIRECT_URI = "https://ab7a-182-70-122-97.ngrok-free.app"
+REDIRECT_URI = "https://33cd-182-70-122-97.ngrok-free.app"
 
 client = WebApplicationClient(CLIENT_ID)
 oauth_session = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URI)
