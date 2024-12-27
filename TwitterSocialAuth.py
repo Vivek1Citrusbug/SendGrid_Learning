@@ -9,11 +9,11 @@ load_dotenv()
 
 AUTHORIZATION_BASE_URL = "https://twitter.com/i/oauth2/authorize"
 TOKEN_URL = "https://api.twitter.com/oauth2/token"
-API_URL = "https://api.twitter.com/2/me"
+API_URL = "https://api.twitter.com/2/users/me"
 
 CLIENT_ID = os.getenv("CLIENT_ID_TWITTER")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET_TWITTER")
-REDIRECT_URI = "https://ab7a-182-70-122-97.ngrok-free.app"
+REDIRECT_URI = "https://33cd-182-70-122-97.ngrok-free.app"
 
 oauth_session = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URI)
 
@@ -56,7 +56,6 @@ def main():
     """
     
     authorization_url = get_authorization_url()
-    webbrowser.open(authorization_url)
     authorization_response = input("Paste the full redirect URL here: ")
     get_access_token(authorization_response)
     user_data = get_user_data()
