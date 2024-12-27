@@ -1,24 +1,29 @@
 import os
-from requests_oauthlib import OAuth2Session
-from oauthlib.oauth2 import WebApplicationClient
 import webbrowser
+from requests_oauthlib import OAuth2Session
 from database_script_social_auth import Session, User
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
-AUTHORIZATION_BASE_URL = "https://github.com/login/oauth/authorize"
-TOKEN_URL = "https://github.com/login/oauth/access_token"
-API_URL = "https://api.github.com/user"
+AUTHORIZATION_BASE_URL = "https://api.x.com/oauth/authorize"
+TOKEN_URL = "https://api.x.com/2/oauth2/token"
+API_URL = "https://api.x.com/2/users"
 
-# GitHub OAuth credentials
-CLIENT_ID = os.getenv("CLIENT_ID_GITHUB")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET_GITHUB")
+# twitter OAuth credentials
+CLIENT_ID = os.getenv("CLIENT_ID_TWITTER")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET_TWITTER")
 REDIRECT_URI = "https://ab7a-182-70-122-97.ngrok-free.app"
 
-client = WebApplicationClient(CLIENT_ID)
 oauth_session = OAuth2Session(CLIENT_ID, redirect_uri=REDIRECT_URI)
 
+# oauth2_user_handler = tweepy.OAuth2UserHandler(
+#     client_id=CLIENT_ID,
+#     redirect_uri=REDIRECT_URI,
+#     scope=['users.read','offline.access'],
+#     client_secret=CLIENT_SECRET
+# )
 
 def get_authorization_url():
     """
@@ -51,32 +56,9 @@ def get_user_data():
     response = oauth_session.get(API_URL)
     return response.json()
 
-
-def save_user_to_db(user_data):
-    """
-    Function to save user data to github user database
-    """
-
-    session = Session()
-    existing_user = session.query(User).filter_by(github_id=user_data["id"]).first()
-    if existing_user:
-        print(f"User {user_data['login']} already exists in the database.")
-    else:
-        user = User(
-            github_id=user_data["id"],
-            username=user_data["login"],
-            email=user_data.get("email"),
-            avatar_url=user_data.get("avatar_url"),
-        )
-        session.add(user)
-        session.commit()
-        print(f"User {user_data['login']} saved to the database.")
-    session.close()
-
-
 def main():
     """
-    Main function to execute the flow of github authentication
+    Main function to execute the flow of twitter authentication
     """
     
     authorization_url = get_authorization_url()
@@ -84,9 +66,8 @@ def main():
     authorization_response = input("Paste the full redirect URL here: ")
     get_access_token(authorization_response)
     user_data = get_user_data()
-    print("User data retrieved from GitHub:")
+    print("User data retrieved from twitter:")
     print(user_data)
-    save_user_to_db(user_data)
 
 
 if __name__ == "__main__":
