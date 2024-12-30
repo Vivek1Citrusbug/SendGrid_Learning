@@ -1,6 +1,6 @@
-#############################################################################################
+##############################################################################################
 ### Task : Create recurring celery task that simulates email sending for every 20 seconds. ###
-#############################################################################################
+##############################################################################################
 
 import smtplib
 from celery import shared_task, Celery
@@ -20,7 +20,7 @@ def send_email_celery():
         msg["Subject"] = f"Testing email functionality for every 20 seconds"
         msg["From"] = "vivek1.citrusbug@gmail.com"
         msg["To"] = "vivek1.citrusbug@gmail.com"
-        msg.set_content("This is a test email sent every 20 minutes.")
+        msg.set_content("This is a test email sent every 20 seconds")
         with smtplib.SMTP("smtp.gmail.com", 587) as smtp:
             smtp.starttls()
             smtp.login("vivek1.citrusbug@gmail.com", "r2zu-ac=T+*27LHe86be")
@@ -33,7 +33,7 @@ def send_email_celery():
 # Configure periodic tasks
 app.conf.beat_schedule = {
     "run-periodic-task-every-20-seconds": {
-        "task": "send_email_celery",
+        "task": "tasks.task_2_celery.send_email_celery",
         "schedule": 20.0,
     },
 }
