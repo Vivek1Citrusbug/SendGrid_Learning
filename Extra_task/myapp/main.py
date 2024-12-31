@@ -1,8 +1,8 @@
 import os
 import shutil
 from fastapi import FastAPI, UploadFile, HTTPException
-from app.tasks import validate_data, transform_data, analyze_data, generate_report
-from app.celery_config import celery_app
+from Extra_task.myapp.tasks import *
+from myapp.celery_config import celery_app
 
 app = FastAPI()
 
