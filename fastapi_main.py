@@ -32,6 +32,11 @@ async def start_exam(pk: int):
     exam_data.append({"pk": pk, "status": "started"})
     save_data(exam_data)
     now = datetime.now()
+    eta = now + timedelta(seconds=10.00)
+    print("########## Now : ", now, "######### ETA : ", eta)
+
+    ## can also use countdown in place of eta.
+
     task = mark_as_absent.apply_async(
         args=[pk], eta=now + timedelta(seconds=10.00), task_id=str(pk)
     )
