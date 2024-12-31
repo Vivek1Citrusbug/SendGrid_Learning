@@ -1,0 +1,18 @@
+[
+    {
+        "pk": 1,
+        "status": "pass"
+    },
+    {
+        "pk": 2,
+        "status": "pass"
+    },
+    {
+        "pk": 3,
+        "status": "pass"
+    },
+    {
+        "pk": 4,
+        "status": "fail"
+    }
+]
