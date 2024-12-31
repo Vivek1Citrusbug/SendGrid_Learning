@@ -5,6 +5,7 @@ from tasks.task_3_celery import delayed_task
 from datetime import datetime
 from tasks.task_1_celery import mark_as_absent
 from generals import save_data, load_data
+from datetime import timedelta
 
 app = FastAPI()
 
@@ -30,13 +31,16 @@ async def start_exam(pk: int):
 
     exam_data.append({"pk": pk, "status": "started"})
     save_data(exam_data)
-    task = mark_as_absent.apply_async(args=[pk], countdown=120)
+    now = datetime.now()
+    task = mark_as_absent.apply_async(
+        args=[pk], eta=now + timedelta(seconds=10.00), task_id=str(pk)
+    )
 
     return {"msg": f"Exam {pk} started at {datetime.now()}", "task_id": task.id}
 
 
 @app.post("/update_exam_result/{pk}")
-async def update_exam_result(pk: int, status: str, task_id: str = None):
+async def update_exam_result(pk: int, status: str):
     """
     Changing the result of the given primary key before 120 seconds.
     """
@@ -55,8 +59,8 @@ async def update_exam_result(pk: int, status: str, task_id: str = None):
     exam["status"] = status
     save_data(exam_data)
 
-    if task_id:
-        task = AsyncResult(task_id)
+    if pk:
+        task = AsyncResult(str(pk))
         if task.status == "PENDING":
             task.revoke(terminate=True)
             print(f"Scheduled task for exam {pk} canceled.")

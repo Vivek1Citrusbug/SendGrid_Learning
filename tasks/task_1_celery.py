@@ -9,7 +9,6 @@ def mark_as_absent(self, pk):
     """
     Celery task to mark attendance of the given pk as absent for remaining ideal for 120 seconds after exam started
     """
-
     exam_data = load_data()
     exam = next((exam for exam in exam_data if exam["pk"] == pk), None)
     if exam and exam["status"] == "started":

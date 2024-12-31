@@ -1,11 +1,11 @@
 [
     {
         "pk": 1,
-        "status": "pass"
+        "status": "fail"
     },
     {
         "pk": 2,
-        "status": "pass"
+        "status": "started"
     },
     {
         "pk": 3,
@@ -13,6 +13,14 @@
     },
     {
         "pk": 4,
-        "status": "fail"
+        "status": "started"
+    },
+    {
+        "pk": 5,
+        "status": "started"
+    },
+    {
+        "pk": 6,
+        "status": "pass"
     }
 ]
