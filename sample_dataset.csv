@@ -1,0 +1,11 @@
+TransactionID,CustomerName,Product,Quantity,Price,TransactionDate
+1,John Doe,Laptop,2,800,2024-01-15
+2,Jane Smith,Smartphone,1,600,2024-01-16
+3,Bob Brown,Tablet,3,300,2024-01-17
+4,Alice Green,Laptop,1,850,2024-01-18
+5,Charlie White,Smartphone,2,650,2024-01-19
+6,Eve Black,Tablet,4,280,2024-01-20
+7,Frank Blue,Laptop,1,900,2024-01-21
+8,Grace Gray,Smartphone,3,700,2024-01-22
+9,Hank Orange,Tablet,2,310,2024-01-23
+10,Ivy Violet,Laptop,1,950,2024-01-24

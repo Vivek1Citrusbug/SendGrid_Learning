@@ -1,0 +1,57 @@
+why celery over traditional asyncio, multithreding.
+
+celery can be userfull where it retry tasks that fail due to worker crasesor other issue. and it can route tasks to different queues based on the type of task or the priority of the task. Additionally, Celery uses message passing to communicate between workers and the task queue, which can be useful if you need to pass large amounts of data between tasks or if you want to decouple the execution of tasks from the rest of your application
+
+scheduled tasks - using delay task.
+recurrent tasks- celery beat for recurrent tasks
+shared task
+ 
+use redis as message broker because kafka is not compatible as message broker.
+reddis is simplme to use and less complex message broker tool.
+use autoscale for celery to assign workers dynamically as depending on the workloads.
+
+#######################################################################################################################
+
+# Schedule Task
+
+Table Exam ( Use File system as a database )
+pk
+status: pass | fail | absent | started
+
+API 1
+    => Exam Start
+    => 1 task should schedule after 2 min ( entry in Exam will be created ), that is responsible for setting status as absent
+
+API 2  => Take pass/fail in payload, and pk
+    => Exam Pass/Fail
+    => Schedules task should be deleted.
+
+Celery Task:	
+    => This task will take pk as parameters, and update those entry ( status ) to absent
+
+
+simple term : 
+First of all api 1 will start the exam and will schedule the task after 2 min, countdown can be set to 120 sec;
+Second api will take pass/fail as parameter if provided before 120 sec then schedules task will be deleted.
+------------------------------------------------------------------------------------------------------
+# Recurring Done
+
+Send mail at every 5 min
+
+-- Command : celery -A tasks.task_2_celery worker --loglevel INFO -P gevent ## for starting worker
+-- Command : celery -A tasks.task_2_celery beat --loglevel INFO ## for creating task one every 20 seconds
+
+------------------------------------------------------------------------------------------------------
+# Queue Done
+
+Task: Create Task with `time.sleep(20)`
+
+API :=> Parameter (string) =>  Create API  that run this task,but should not wait for 20 seconds to respond
+
+After 20 seconds, print Parameter in console
+-------------------------------------------------------------------------------------------------------
+
+
+
+
+

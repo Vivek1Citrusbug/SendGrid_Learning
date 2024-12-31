@@ -1,0 +1,39 @@
+
+
+Problem Statement: Task Chaining in Celery
+
+
+
+Scenario:
+You are tasked with creating a task pipeline for a data processing application using Celery. The application processes large datasets uploaded by users and performs the following operations in sequence:
+
+Data Validation: Verify the integrity and structure of the uploaded dataset.
+Data Transformation: Transform the validated data into a required format (e.g., converting CSV to JSON).
+Data Analysis: Perform an analysis on the transformed data to calculate statistics like mean, median, mode, and standard deviation for numeric fields.
+Data Reporting: Generate a summary report (e.g., PDF or CSV) based on the analysis results and store it in an external storage service (e.g., AWS S3 or MinIO).
+
+Requirements:
+
+Implement the four tasks as Celery tasks:
+
+validate_data
+transform_data
+analyze_data
+generate_report
+Use task chaining in Celery to ensure that:
+
+The output of each task is passed as input to the next task.
+If any task in the chain fails, the entire chain stops and raises an appropriate error.
+Log the progress and results of each task using Celery's logging system.
+
+(Optional) Use a backend (e.g., Redis or a database) to track the status and results of the task chain.
+
+Ensure the final report is uploaded to the storage service, and return the URL of the uploaded report as the final output of the chain.
+
+Deliverables:
+
+A Python script with Celery task implementations.
+A configuration file for Celery and the message broker.
+Steps to run the Celery worker and trigger the task chain.
+Example dataset for testing.
+A brief report explaining how you implemented the task chaining and handled errors.
