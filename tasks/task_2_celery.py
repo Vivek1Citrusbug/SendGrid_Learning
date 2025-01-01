@@ -23,7 +23,7 @@ def send_email_celery():
         msg.set_content("This is a test email sent every 20 seconds.")
         with smtplib.SMTP("sandbox.smtp.mailtrap.io", 587) as smtp:
             smtp.starttls()
-            smtp.login("a5634ec7138a39", "63bbdfc9cce507")
+            smtp.login("a5634ec7138a39", "63bbdfc9cce507") ## Used maitrap for mail service.thats why not used environment variables.
             smtp.send_message(msg)
             print("Email sent successfully.")
     except Exception as e:
